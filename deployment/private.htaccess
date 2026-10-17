@@ -1,0 +1,3 @@
+# Yalnızca özel uygulama/database klasöründe kullanılmalıdır.
+# Ortak public_html köküne kopyalamayın; bu klasörün HTTP erişimini kapatır.
+Require all denied

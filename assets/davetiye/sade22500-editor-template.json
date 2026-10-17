@@ -1,0 +1,167 @@
+{
+  "template": "sade22500",
+  "background": "/assets/davetiye/sade22500-editor-background.png",
+  "items": [
+    {
+      "text": "Mart",
+      "x": 787.4028563300145,
+      "y": 1085.8927683909537,
+      "size": 57.627311522048366,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "cover"
+    },
+    {
+      "text": "2025",
+      "x": 784.6367453769558,
+      "y": 1149.077587730699,
+      "size": 57.627311522048366,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "cover"
+    },
+    {
+      "text": "CUMARTESİ",
+      "x": 783.3620506401136,
+      "y": 1215.9033054328047,
+      "size": 21.607965860597456,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "cover"
+    },
+    {
+      "text": "SAAT:20.00",
+      "x": 783.3728546230441,
+      "y": 1239.5951172342084,
+      "size": 21.607965860597456,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "cover"
+    },
+    {
+      "text": "13",
+      "x": 782.287826458037,
+      "y": 971.885851052768,
+      "size": 140.367852062589,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "cover"
+    },
+    {
+      "text": "Saliha",
+      "x": 767.9081716927453,
+      "y": 223.06038809461907,
+      "size": 97.31465149359884,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "cover"
+    },
+    {
+      "text": "Yunus",
+      "x": 772.1413590327168,
+      "y": 314.73309175981257,
+      "size": 97.314651493599,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "cover"
+    },
+    {
+      "text": "BU MUTLU GÜNÜMÜZE\nDavetlisiniz",
+      "label": "Davet metni",
+      "x": 291.16284271692774,
+      "y": 785.4860670652456,
+      "size": 32.27510668563297,
+      "font": "SadeCaslon",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "inside",
+      "lineSpacing": 0.9141258467505893
+    },
+    {
+      "text": "AYSUN - MEHMET ANIL\nYASMİN - METİN TUR",
+      "label": "Aileler",
+      "x": 289.0705251778094,
+      "y": 883.3099038211593,
+      "size": 26.903556187766657,
+      "font": "SadeCaslon",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "inside",
+      "lineSpacing": 1.0966397535722587
+    },
+    {
+      "text": "DÜĞÜN\nİNCİ KIR BAHÇESİ\nNARİL MAH.\nMEHMET AKİF CAD.\nNO:1/3 İSTANBUL",
+      "label": "Düğün bilgileri",
+      "x": 283.96079502133745,
+      "y": 986.9844273459837,
+      "size": 26.903556187766657,
+      "font": "SadeCaslon",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "inside",
+      "lineSpacing": 1.0966397535722587
+    },
+    {
+      "text": "KINA\n01 EYLÜL 2025\nCUMA - SAAT:20.00\nİNCİ KIR BAHÇESİ\nNARİL MAH.\nMEHMET AKİF CAD. NO:1/3\nİSTANBUL",
+      "label": "Kına bilgileri",
+      "x": 281.79785817923215,
+      "y": 1162.44897322589,
+      "size": 26.90355618776674,
+      "font": "SadeCaslon",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "inside",
+      "lineSpacing": 1.0966397535722554
+    },
+    {
+      "text": "S",
+      "x": 410,
+      "y": 510,
+      "size": 220,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "accessory",
+      "label": "Mühür · ilk harf",
+      "lineSpacing": 1
+    },
+    {
+      "text": "Y",
+      "x": 590,
+      "y": 700,
+      "size": 220,
+      "font": "SadeNewParis",
+      "style": "normal",
+      "color": "#191919",
+      "align": "center",
+      "area": "accessory",
+      "label": "Mühür · ikinci harf",
+      "lineSpacing": 1
+    }
+  ],
+  "schemaVersion": 2,
+  "printSizeMm": {
+    "width": 124,
+    "height": 190
+  },
+  "foldX": 508.06002844950217
+}

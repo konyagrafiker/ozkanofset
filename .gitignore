@@ -1,0 +1,26 @@
+.env
+.env.*
+!.env.example
+database/
+_backups/
+scratch/
+tools/
+scraper/
+POLEN */
+node_modules/
+release/
+*.log
+*.zip
+*.tar
+*.gz
+*.pem
+*.key
+*.pfx
+*.p12
+**/admin-password.txt
+**/ientegre_settings.json
+
+# Büyük katalog arşivi FTP yayın paketiyle aktarılır.
+assets/davetiye/*
+!assets/davetiye/*-editor-template.json
+scratch_*.js

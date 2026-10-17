@@ -1,0 +1,134 @@
+{
+  "template": "sade22503",
+  "schemaVersion": 2,
+  "background": "/assets/davetiye/sade22503-product.svg",
+  "printBackground": "/assets/davetiye/sade22503-print.svg",
+  "items": [
+    {
+      "text": "Lenda",
+      "x": 500,
+      "y": 370,
+      "size": 120,
+      "font": "SadeMileGreen",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "&",
+      "x": 500,
+      "y": 455,
+      "size": 65,
+      "font": "SadeMileGreen",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "Uzay",
+      "x": 500,
+      "y": 530,
+      "size": 120,
+      "font": "SadeMileGreen",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "EREN & İNAN AİLELERİ",
+      "x": 500,
+      "y": 780,
+      "size": 30,
+      "font": "SadeManifold",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "inside"
+    },
+    {
+      "text": "En mutlu günümüzde davetlisiniz.",
+      "x": 500,
+      "y": 850,
+      "size": 31,
+      "font": "SadeManifold",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "inside"
+    },
+    {
+      "text": "23 Ekim 2025 Cumartesi",
+      "x": 500,
+      "y": 940,
+      "size": 52,
+      "font": "SadeMileGreen",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "inside"
+    },
+    {
+      "text": "Nikah\n19:30",
+      "x": 320,
+      "y": 1030,
+      "size": 29,
+      "font": "SadeManifold",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "inside"
+    },
+    {
+      "text": "Yemek\n20:00",
+      "x": 500,
+      "y": 1030,
+      "size": 29,
+      "font": "SadeManifold",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "inside"
+    },
+    {
+      "text": "Müzik\n20:30",
+      "x": 680,
+      "y": 1030,
+      "size": 29,
+      "font": "SadeManifold",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "inside"
+    },
+    {
+      "text": "Tahla Kır Bahçesi",
+      "x": 500,
+      "y": 1195,
+      "size": 31,
+      "font": "SadeManifold",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "inside"
+    },
+    {
+      "text": "Manisa Yolu Üzeri No 2 İzmir",
+      "x": 500,
+      "y": 1300,
+      "size": 28,
+      "font": "SadeManifold",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    }
+  ],
+  "printSizeMm": {
+    "width": 135,
+    "height": 195
+  },
+  "singlePanel": true
+}

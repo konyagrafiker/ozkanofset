@@ -1,0 +1,8 @@
+{
+  "name": "ozkan-ofset-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Özkan Ofset web sitesi ve yönetim paneli",
+  "engines": {"node": ">=22"},
+  "scripts": {"start": "node app.js", "check:production": "node deployment/check-production.js", "test:release": "node tests/production-security.test.js"}
+}

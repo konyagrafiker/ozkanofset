@@ -1,0 +1,44 @@
+[
+  {
+    "family": "Allura",
+    "file": "allura.ttf",
+    "turkishCharacters": "ÇĞİÖŞÜçğıöşü",
+    "verified": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/allura/Allura-Regular.ttf"
+  },
+  {
+    "family": "Great Vibes",
+    "file": "greatvibes.ttf",
+    "turkishCharacters": "ÇĞİÖŞÜçğıöşü",
+    "verified": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/greatvibes/GreatVibes-Regular.ttf"
+  },
+  {
+    "family": "Parisienne",
+    "file": "parisienne.ttf",
+    "turkishCharacters": "ÇĞİÖŞÜçğıöşü",
+    "verified": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/parisienne/Parisienne-Regular.ttf"
+  },
+  {
+    "family": "Marck Script",
+    "file": "marckscript.ttf",
+    "turkishCharacters": "ÇĞİÖŞÜçğıöşü",
+    "verified": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/marckscript/MarckScript-Regular.ttf"
+  },
+  {
+    "family": "Caveat",
+    "file": "caveat.ttf",
+    "turkishCharacters": "ÇĞİÖŞÜçğıöşü",
+    "verified": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/caveat/Caveat%5Bwght%5D.ttf"
+  },
+  {
+    "family": "Dancing Script",
+    "file": "dancingscript.ttf",
+    "turkishCharacters": "ÇĞİÖŞÜçğıöşü",
+    "verified": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/dancingscript/DancingScript%5Bwght%5D.ttf"
+  }
+]

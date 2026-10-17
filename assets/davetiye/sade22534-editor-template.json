@@ -1,0 +1,91 @@
+{
+  "template": "sade22534",
+  "schemaVersion": 2,
+  "singlePanel": true,
+  "canvasHeight": 417,
+  "background": "/assets/davetiye/sade22534-background.svg",
+  "printBackground": "/assets/davetiye/sade22534-background.svg",
+  "printSizeMm": {
+    "width": 235,
+    "height": 98
+  },
+  "items": [
+    {
+      "text": "Hayrinüsra ile Kerim",
+      "x": 500,
+      "y": 83,
+      "size": 55,
+      "font": "SadeAkayla",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "Mutlu beraberliğimizin başlangıcında sizlerle\nbirlikte olmaktan kıvanç duyacağız",
+      "x": 500,
+      "y": 174,
+      "size": 18,
+      "font": "SadeBerkeley",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "AYSEL-MUSTAFA KARA",
+      "x": 310,
+      "y": 237,
+      "size": 18,
+      "font": "SadeBerkeley",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "SEVİM-HALİT EYİM",
+      "x": 710,
+      "y": 237,
+      "size": 18,
+      "font": "SadeBerkeley",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "20 Haziran 2025",
+      "x": 500,
+      "y": 275,
+      "size": 32,
+      "font": "SadeAkayla",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "CUMARTESİ SAAT:21:00",
+      "x": 500,
+      "y": 325,
+      "size": 17,
+      "font": "SadeBerkeley",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    },
+    {
+      "text": "PEKİN KIR DÜĞÜN SALONU AYAZAĞA /İSTANBUL",
+      "x": 500,
+      "y": 353,
+      "size": 17,
+      "font": "SadeBerkeley",
+      "style": "normal",
+      "align": "center",
+      "color": "#191919",
+      "area": "cover"
+    }
+  ]
+}
