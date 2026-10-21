@@ -1,0 +1,41 @@
+name: Isletme Ozeti - FTPS Yukleme
+
+on:
+  workflow_dispatch:
+    inputs:
+      server_dir:
+        description: FileZilla sag panelindeki uygulama klasoru
+        required: true
+        default: /ozkanofset-app/
+        type: string
+      dry_run:
+        description: Yalnizca baglantiyi ve dosyalari kontrol et (yukleme yapmaz)
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-ftps
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Ozet testleri
+        run: node tests/admin-overview.test.js
+      - name: FTPS baglantisi ve yukleme
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          SERVER_DIR: ${{ inputs.server_dir }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: python3 deployment/upload-overview-ftps.py
