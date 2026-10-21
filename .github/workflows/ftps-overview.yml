@@ -23,12 +23,22 @@ concurrency:
 
 jobs:
   upload:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    runs-on: [self-hosted, Windows, X64, ozkanofset-pc]
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: powershell
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
       - name: Ozet testleri
         run: node tests/admin-overview.test.js
       - name: FTPS baglantisi ve yukleme
@@ -38,4 +48,4 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           SERVER_DIR: ${{ inputs.server_dir }}
           DRY_RUN: ${{ inputs.dry_run }}
-        run: python3 deployment/upload-overview-ftps.py
+        run: python deployment/upload-overview-ftps.py
