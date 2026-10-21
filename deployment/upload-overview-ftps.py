@@ -1,8 +1,41 @@
 """Upload only the overview patch; never synchronize or delete remote files."""
 import ftplib
+import hashlib
+import hmac
 import os
 from pathlib import Path
 import ssl
+
+# SHA-256 shown by the user's existing FileZilla connection (2026-10-22).
+CERTIFICATE_SHA256 = '615ecb860c6a3151d348fa5298f9e79bda6db84bf96defb02b7324d7dea2b80b'
+
+class PinnedFTP_TLS(ftplib.FTP_TLS):
+    def __init__(self, **kwargs):
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        context.minimum_version = ssl.TLSVersion.TLSv1_2
+        # The exact certificate is authenticated below, before credentials or
+        # file contents are sent, instead of trusting its self-signed issuer.
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+        super().__init__(context=context, **kwargs)
+
+    def verify_certificate(self, connection):
+        certificate = connection.getpeercert(binary_form=True)
+        if not certificate or not hmac.compare_digest(
+            hashlib.sha256(certificate).hexdigest(), CERTIFICATE_SHA256
+        ):
+            connection.close()
+            raise ssl.SSLCertVerificationError('FTPS certificate fingerprint does not match FileZilla. Connection stopped.')
+
+    def auth(self):
+        response = super().auth()
+        self.verify_certificate(self.sock)
+        return response
+
+    def ntransfercmd(self, cmd, rest=None):
+        connection, size = super().ntransfercmd(cmd, rest)
+        self.verify_certificate(connection)
+        return connection, size
 
 FILES = (
     'assets/js/admin-overview-data.js',
@@ -20,7 +53,7 @@ def main():
     for name in FILES:
         if not Path(name).is_file():
             raise RuntimeError(f'Missing local file: {name}')
-    with ftplib.FTP_TLS(context=ssl.create_default_context(), timeout=60) as ftp:
+    with PinnedFTP_TLS(timeout=60) as ftp:
         ftp.connect(os.environ['FTP_SERVER'], 21)
         ftp.login(os.environ['FTP_USERNAME'], os.environ['FTP_PASSWORD'])
         ftp.prot_p()
