@@ -6,22 +6,9 @@
     <title>Özkan Ofset | Yönetim Masası</title>
     <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg?v=5">
     <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        adminDark: '#0F172A',
-                        adminSidebar: '#1E293B',
-                        primary: '#2563EB',
-                        brandOrange: '#EA580C',
-                        brandGreen: '#16A34A'
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="/assets/css/admin.css?v=20261020-1">
+    <link rel="stylesheet" href="/assets/css/admin-forms.css?v=20261020-1">
+    <script src="/assets/js/record-statuses.js?v=20261020-1"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -45,7 +32,7 @@
             </div>
 
             <!-- Navigasyon -->
-            <nav class="p-3 space-y-1"><a href="/assets/invitation-drafts-admin.html" class="block px-3.5 py-2.5 rounded-xl font-bold text-xs text-slate-400 hover:text-white hover:bg-slate-800">Davetiye taslakları</a>
+            <nav class="p-3 space-y-1">
                 <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="sidebar-btn active w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl font-bold text-xs text-white bg-primary transition">
                     <i class="fa-solid fa-chart-pie w-4 text-center"></i>
                     <span>Genel Bakış</span>
@@ -1670,12 +1657,12 @@
                     <label class="text-xs font-bold text-slate-600">Durum:</label>
                     <select id="adminDavetiyeQuoteStatusSelect" class="text-xs font-bold border rounded-lg px-2.5 py-1.5 bg-slate-50">
                         <option value="Yeni">Yeni</option>
-                        <option value="İnceleniyor">İnceleniyor</option>
                         <option value="Taslak Hazırlanıyor">Taslak Hazırlanıyor</option>
                         <option value="Müşteri Onayında">Müşteri Onayında</option>
                         <option value="Onaylandı">Onaylandı</option>
-                        <option value="Baskıda">Baskıda</option>
+                        <option value="Üretimde">Üretimde</option>
                         <option value="Tamamlandı">Tamamlandı</option>
+                        <option value="Teslim Edildi">Teslim Edildi</option>
                         <option value="İptal">İptal</option>
                     </select>
                     <button onclick="updateDavetiyeQuoteStatusFromModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-black text-white rounded-lg font-bold text-xs cursor-pointer">
@@ -2612,7 +2599,7 @@
         }
 
         // 3. QUOTES & PRODUCTS
-        let currentQuoteStatusFilter = 'all';
+        let currentQuoteStatusFilter = 'Yeni';
 
         const QUOTE_STATUS_CONFIG = {
             'Yeni': {
@@ -2665,8 +2652,8 @@
                 badgeActive: 'bg-white/25 text-white',
                 badgeInactive: 'bg-emerald-200/90 text-emerald-950'
             },
-            'Baskıda': {
-                label: 'Baskıda',
+            'Üretimde': {
+                label: 'Üretimde',
                 icon: 'fa-print',
                 badgeClass: 'bg-cyan-50 text-cyan-800 border-cyan-300',
                 dotClass: 'bg-cyan-500',
@@ -2697,10 +2684,12 @@
             }
         };
 
-        for (const [key, color] of [['Fiyatlandırıldı','amber'],['Teklif Verildi','blue'],['Arşivlendi','slate'],['Siparişe Dönüştürüldü','emerald']]) {
-            QUOTE_STATUS_CONFIG[key] = { ...QUOTE_STATUS_CONFIG['Yeni'], label: key, badgeClass: 'bg-' + color + '-50 text-' + color + '-800 border-' + color + '-300' };
+        for (const [key, color] of [['Fiyatlandırıldı','amber'],['Teklif Verildi','blue'],['Arşivlendi','slate'],['Siparişe Dönüştü','emerald']]) {
+            QUOTE_STATUS_CONFIG[key] = { ...QUOTE_STATUS_CONFIG['Yeni'], label: key, badgeClass: 'bg-' + color + '-50 text-' + color + '-800 border-' + color + '-300',dotClass:'bg-'+color+'-500',btnActive:'bg-'+color+'-600 text-white border-'+color+'-600 shadow-md',btnInactive:'border-'+color+'-200 text-'+color+'-800 bg-'+color+'-50 hover:bg-'+color+'-100',badgeInactive:'bg-'+color+'-100 text-'+color+'-900' };
         }
+        QUOTE_STATUS_CONFIG['Teslim Edildi'] = {...QUOTE_STATUS_CONFIG['Tamamlandı'], label:'Teslim Edildi', icon:'fa-truck'};
         function getQuoteStatusConfig(status) {
+            status = OzkanRecordStatuses.normalize(status);
             return QUOTE_STATUS_CONFIG[status] || {
                 label: status || 'Yeni',
                 icon: 'fa-tag',
@@ -2713,7 +2702,7 @@
             };
         }
 
-        const recordStatusFilters = { quotes: 'all', orders: 'all' };
+        const recordStatusFilters = { quotes: 'Yeni', orders: 'all' };
         function currentRecordMenu() { return currentTab === 'orders' ? 'orders' : 'quotes'; }
         function recordsForMenu(menu = currentRecordMenu()) {
             return (quotesData || []).filter(q => menu === 'quotes' ? q.type === 'ozel_uretim' : q.type !== 'ozel_uretim');
@@ -2721,7 +2710,7 @@
         function updateRecordBadges() {
             for (const [menu, id] of [['quotes', 'pendingQuotesBadge'], ['orders', 'pendingOrdersBadge']]) {
                 const badge = document.getElementById(id);
-                if (badge) badge.innerText = recordsForMenu(menu).filter(q => !q.isDeleted && (q.status || 'Yeni') === 'Yeni').length;
+                if (badge) badge.innerText = recordsForMenu(menu).filter(q => !q.isDeleted && OzkanRecordStatuses.normalize(q.status) === 'Yeni').length;
             }
         }
         async function loadQuotes() {
@@ -2730,6 +2719,7 @@
                 const data = await res.json();
                 if (!res.ok || !Array.isArray(data)) throw new Error(data.error || 'Kayıtlar yüklenemedi.');
                 quotesData = data;
+                if (typeof setAdminOverviewRecords === 'function') setAdminOverviewRecords(data);
                 updateRecordBadges();
                 if (typeof renderCostAnalysisIndex === 'function') renderCostAnalysisIndex();
                 renderQuoteFilterButtons();
@@ -2752,7 +2742,7 @@
             if (!container) return;
 
             const activeQuotes = recordsForMenu().filter(q => !q.isDeleted);
-            const openQuotes = activeQuotes.filter(q => currentRecordMenu() !== 'quotes' || !['Arşivlendi', 'Siparişe Dönüştürüldü'].includes(q.status));
+            const openQuotes = activeQuotes.filter(q => currentRecordMenu() !== 'quotes' || !['Arşivlendi', 'Siparişe Dönüştü'].includes(OzkanRecordStatuses.normalize(q.status)));
             const trashQuotes = recordsForMenu().filter(q => q.isDeleted);
             const totalActive = openQuotes.length;
             const totalTrash = trashQuotes.length;
@@ -2761,7 +2751,7 @@
             const isTrashActive = currentQuoteStatusFilter === 'trash';
 
             // Sol taraf: Tümü + her durum için renkli butonlar
-            let buttonsHtml = `
+            let buttonsHtml = currentRecordMenu() === 'quotes' ? '<div class="flex flex-wrap items-center gap-1.5 sm:gap-2">' : `
                 <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
                     <button type="button" 
                             onclick="setQuoteStatusFilter('all')" 
@@ -2771,8 +2761,9 @@
                     </button>
             `;
 
-            for (const [key, cfg] of Object.entries(QUOTE_STATUS_CONFIG).filter(([key]) => currentRecordMenu() === 'quotes' ? ['Yeni','İnceleniyor','Fiyatlandırıldı','Teklif Verildi','Arşivlendi','Siparişe Dönüştürüldü'].includes(key) : !['Fiyatlandırıldı','Teklif Verildi','Arşivlendi','Siparişe Dönüştürüldü'].includes(key))) {
-                const count = activeQuotes.filter(q => q.status === key).length;
+            for (const key of OzkanRecordStatuses[currentRecordMenu()]) {
+                const cfg = getQuoteStatusConfig(key);
+                const count = activeQuotes.filter(q => OzkanRecordStatuses.normalize(q.status) === key).length;
                 const isSelected = currentQuoteStatusFilter === key;
                 buttonsHtml += `
                     <button type="button" 
@@ -2788,14 +2779,14 @@
             buttonsHtml += `</div>`;
 
             // Sağ taraf: Silinenler (Çöp Kutusu - 30 Gün Saklanır)
-            buttonsHtml += `
+            if (typeof adminCan==='function' && adminCan(currentRecordMenu(),'delete')) buttonsHtml += `
                 <div class="flex items-center gap-2 mt-2 sm:mt-0">
                     <button type="button" 
                             onclick="setQuoteStatusFilter('trash')" 
                             title="Son 30 gün içinde silinen kayıtlar (30 gün sonra otomatik temizlenir)" 
                             class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer border ${isTrashActive ? 'bg-rose-700 text-white border-rose-700 shadow-md ring-2 ring-rose-400' : 'bg-rose-50/80 text-rose-700 border-rose-200 hover:bg-rose-100 hover:border-rose-300'}">
                         <i class="fa-solid fa-trash-can text-xs"></i>
-                        <span>Silinenler (30 Gün)</span>
+                        <span>Silinenler</span>
                         <span class="px-1.5 py-0.2 rounded-full text-[10px] font-black ${isTrashActive ? 'bg-white/25 text-white' : 'bg-rose-200 text-rose-900'}">${totalTrash}</span>
                     </button>
                 </div>
@@ -2814,9 +2805,9 @@
             if (isTrashView) {
                 filtered = recordsForMenu().filter(q => q.isDeleted);
             } else if (currentQuoteStatusFilter === 'all') {
-                filtered = recordsForMenu().filter(q => !q.isDeleted && (currentRecordMenu() !== 'quotes' || !['Arşivlendi', 'Siparişe Dönüştürüldü'].includes(q.status)));
+                filtered = recordsForMenu().filter(q => !q.isDeleted && (currentRecordMenu() !== 'quotes' || !['Arşivlendi', 'Siparişe Dönüştü'].includes(OzkanRecordStatuses.normalize(q.status))));
             } else {
-                filtered = recordsForMenu().filter(q => !q.isDeleted && q.status === currentQuoteStatusFilter);
+                filtered = recordsForMenu().filter(q => !q.isDeleted && OzkanRecordStatuses.normalize(q.status) === currentQuoteStatusFilter);
             }
 
             const menu = currentRecordMenu();
@@ -2878,7 +2869,7 @@
                     trashExpiryHtml = `
                         <div class="mt-1">
                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-900 border border-amber-200">
-                                <i class="fa-regular fa-clock text-amber-600"></i> ${remainingDays} gün sonra silinir
+                                <i class="fa-regular fa-clock text-amber-600"></i> ${recordHasProtectedHistory(q)?'Fiyat ve maliyet geçmişi korunur':remainingDays+' gün sonra silinir'}
                             </span>
                         </div>
                     `;
@@ -2939,15 +2930,15 @@
                         ${(isTrashView || q.type === 'ozel_uretim') ? `
                             <span class="text-[11px] font-bold px-2.5 py-1 rounded-full border ${cfg.badgeClass} inline-flex items-center gap-1.5 shadow-2xs">
                                 <span class="w-1.5 h-1.5 rounded-full ${cfg.dotClass}"></span>
-                                <span>${q.status}</span>
+                                <span>${cfg.label}</span>
                             </span>
                         ` : `
                             <div class="relative inline-block">
                                 <select onchange="changeQuoteStatus('${q.id}', this.value)" 
                                         title="Durumu Değiştir" 
                                         class="text-[11px] font-bold px-2.5 py-1 rounded-full cursor-pointer transition border shadow-2xs focus:outline-none focus:ring-2 focus:ring-offset-1 ${cfg.badgeClass}">
-                                    ${Object.keys(QUOTE_STATUS_CONFIG).filter(s => !['Fiyatlandırıldı','Teklif Verildi','Arşivlendi','Siparişe Dönüştürüldü'].includes(s)).map(s => `
-                                        <option value="${s}" ${q.status === s ? 'selected' : ''}>${s}</option>
+                                    ${OzkanRecordStatuses.orders.map(s => `
+                                        <option value="${s}" ${OzkanRecordStatuses.normalize(q.status) === s ? 'selected' : ''}>${s}</option>
                                     `).join('')}
                                 </select>
                             </div>
@@ -2964,9 +2955,9 @@
                                     <i class="fa-solid fa-envelope-open-text text-xs"></i>
                                 </button>
                             ` : ''}
-                            <button onclick="permanentlyDeleteQuote('${q.id}')" title="Kalıcı Olarak Sil (Geri Alınamaz)" class="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg cursor-pointer">
+                            ${!recordHasProtectedHistory(q) && adminCan(q.type==='ozel_uretim'?'quotes':'orders','delete') ? `<button onclick="permanentlyDeleteQuote('${q.id}')" title="Kalıcı Olarak Sil (Geri Alınamaz)" class="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg cursor-pointer">
                                 <i class="fa-solid fa-trash-can text-sm"></i>
-                            </button>
+                            </button>` : ''}
                         ` : `
                             ${isDavetiye ? `
                                 <button onclick="viewDavetiyeQuoteModal('${q.id}')" title="Tüm Davetiye ve Merasim Bilgilerini İncele" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold rounded-lg text-xs transition inline-flex items-center gap-1 shadow-2xs cursor-pointer">
@@ -2977,7 +2968,7 @@
                             ${q.type !== 'ozel_uretim' ? `<button onclick="viewCustomQuote('${q.id}')" class="text-blue-700 font-bold px-2">İş / Maliyet Detayı</button>` : ''}
                             ${q.type !== 'ozel_uretim' ? `<button onclick="changeQuoteStatus('${q.id}', 'Onaylandı')" title="Onayla" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg cursor-pointer"><i class="fa-solid fa-check"></i></button>` : ''}
                             <button onclick="openWhatsAppQuote('${q.phone}', '${q.id}', decodeURIComponent('${encodeURIComponent(q.customerName).replace(/'/g, '%27')}'))" title="WhatsApp ile Yaz" class="p-1.5 text-green-600 hover:bg-green-50 rounded-lg cursor-pointer"><i class="fa-brands fa-whatsapp"></i></button>
-                            ${q.type === 'ozel_uretim' || (!q.pricingSnapshot && !(q.supplierQuotes || []).length && !(q.procurementCostRevisions || []).length && !(q.costAnalyses || []).length) ? `<button onclick="deleteQuote('${q.id}')" title="Sil (30 gün Silinenler bölümünde saklanır)" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition cursor-pointer">
+                            ${typeof adminCan==='function' && adminCan(q.type==='ozel_uretim'?'quotes':'orders','delete') ? `<button onclick="deleteQuote('${q.id}')" title="Silinenler bölümüne taşı" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition cursor-pointer">
                                 <i class="fa-solid fa-trash-can text-sm"></i>
                             </button>` : ''}
                         `}
@@ -2987,8 +2978,10 @@
             }).join('');
         }
 
+        function recordHasProtectedHistory(q){return q.type!=='ozel_uretim'&&!!((q.priceRevisions||[]).length||q.pricingSnapshot||(q.supplierQuotes||[]).length||(q.procurementCostRevisions||[]).length||(q.costAnalyses||[]).length);}
         async function deleteQuote(id) {
-            if (!confirm('Bu kaydı silinenler kutusuna taşımak istediğinize emin misiniz?\\n\\nNot: Sipariş 30 gün boyunca "Silinenler" kutusunda saklanacak ve dilediğiniz zaman "Geri Yükle" yapabileceksiniz.')) {
+            const record=quotesData.find(q=>q.id===id);if(!record||!adminCan(record.type==='ozel_uretim'?'quotes':'orders','delete'))return false;
+            if (!confirm('Bu kaydı silinenler kutusuna taşımak istediğinize emin misiniz?\\n\\nNot: Kayıt "Silinenler" bölümünde saklanacak ve dilediğiniz zaman "Geri Yükle" yapabileceksiniz.')) {
                 return false;
             }
             try {
@@ -3141,7 +3134,7 @@
             `;
 
             const statusSel = document.getElementById('adminDavetiyeQuoteStatusSelect');
-            if (statusSel) statusSel.value = q.status || 'Yeni';
+            if (statusSel) statusSel.value = OzkanRecordStatuses.normalize(q.status);
 
             const cleanPhone = (q.phone || '').replace(/[^0-9]/g, '');
             const waMsg = `Merhaba Sayın ${escapeQuoteText(q.customerName)}, Özkan Ofset'ten ${escapeQuoteText(q.id)} numaralı davetiye ön siparişiniz için grafik ön provanız hazırlanmıştır.`;
@@ -3187,7 +3180,7 @@
         async function updateDavetiyeQuoteStatusFromModal() {
             if (!activeAdminDavetiyeQuoteId) return;
             const statusSel = document.getElementById('adminDavetiyeQuoteStatusSelect');
-            const newStatus = statusSel ? statusSel.value : 'İnceleniyor';
+            const newStatus = statusSel ? statusSel.value : 'Yeni';
             await changeQuoteStatus(activeAdminDavetiyeQuoteId, newStatus);
             closeDavetiyeQuoteModal();
         }
@@ -4987,12 +4980,14 @@
     </script>
 <script src="/assets/js/quote-tools.js"></script>
 <script src="/assets/js/admin-record-pages.js"></script>
-<script src="/assets/js/admin-custom-quotes.js"></script>
-<script src="/assets/js/admin-customers.js"></script>
+<script src="/assets/js/invitation-print.js?v=20261020-7"></script>
+<script src="/assets/js/admin-custom-quotes.js?v=20261020-10"></script>
+<script src="/assets/js/admin-customers.js?v=20261020-8"></script>
+<script src="/assets/js/admin-customer-contacts.js?v=20261020-9"></script>
 <script src="/assets/js/admin-row-navigation.js"></script>
-<script src="/assets/js/admin-access.js"></script>
-<script src="/assets/js/admin-overview-data.js"></script>
-<script src="/assets/js/admin-overview.js"></script>
+<script src="/assets/js/admin-access.js?v=20261020-10"></script>
+<script src="/assets/js/admin-overview-data.js?v=20261020-2"></script>
+<script src="/assets/js/admin-overview.js?v=20261020-2"></script>
 <script src="/assets/js/admin-traffic.js"></script>
 <script src="/assets/js/admin-receivables.js"></script>
 </body>

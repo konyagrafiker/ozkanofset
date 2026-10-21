@@ -1,6 +1,7 @@
 let overviewRecords=[],overviewRequest=0;
 const overviewMoney=(n,currency)=>Number(n).toLocaleString('tr-TR',{style:'currency',currency:['TRY','EUR','USD'].includes(currency)?currency:'TRY'});
 const overviewEscape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function setAdminOverviewRecords(records){overviewRequest++;overviewRecords=records;if(document.getElementById('overviewMessage'))renderAdminOverview();}
 async function refreshAdminOverview(){
  const request=++overviewRequest;const note=document.getElementById('overviewMessage');if(!note)return;note.textContent='Kayıtlar yükleniyor…';
  try{if(typeof adminAccessReady!=='undefined')await adminAccessReady;
@@ -16,3 +17,5 @@ function renderAdminOverview(){
  const net=document.getElementById('overviewNet');net.textContent=canOrders&&totals.length&&!result.netUnknown?'KDV hariç: '+totals.map(([c,t])=>overviewMoney(t.net,c)).join(' · '):'';
 }
 document.addEventListener('DOMContentLoaded',()=>refreshAdminOverview());
+setInterval(()=>{if(!document.hidden&&!document.getElementById('section-dashboard')?.classList.contains('hidden'))refreshAdminOverview();},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!document.getElementById('section-dashboard')?.classList.contains('hidden'))refreshAdminOverview();});
